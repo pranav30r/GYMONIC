@@ -1,0 +1,15 @@
+{
+  "name": "GYMONIC — AI Fitness Coach",
+  "short_name": "GYMONIC",
+  "description": "Real-time AI-powered fitness coaching with pose estimation and form correction.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A1E",
+  "theme_color": "#6C63FF",
+  "orientation": "landscape",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "categories": ["fitness", "health", "sports"]
+}

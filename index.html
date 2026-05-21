@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GYMONIC — AI-powered real-time fitness coaching with pose estimation and form correction.">
+  <title>GYMONIC — AI Fitness Coach</title>
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0A0A0A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══ LOADING OVERLAY ═══ -->
+    <div class="loading-overlay" id="loading-overlay">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loading-text">Loading AI Model...</div>
+    </div>
+
+    <!-- ═══ SCREEN 1: HOME ═══ -->
+    <div id="home-screen" class="screen active">
+
+      <!-- Header -->
+      <div class="home-header">
+        <div class="home-logo">GYM<span>ONIC</span></div>
+        <div class="streak-badge" id="streak-badge">
+          <span>🔥</span>
+          <span id="hs-streak-badge">0 Day Streak</span>
+        </div>
+      </div>
+
+      <!-- Greeting -->
+      <div class="home-greeting">
+        <div class="home-greeting-title" id="home-greeting">Good morning, Athlete</div>
+        <div class="home-greeting-sub" id="home-date">Loading...</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="home-stats" id="home-stats">
+        <div class="home-stat">
+          <span class="home-stat-value" id="hs-workouts">0</span>
+          <span class="home-stat-label">Workouts</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-value" id="hs-reps">0</span>
+          <span class="home-stat-label">Total Reps</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-value" id="hs-score">--</span>
+          <span class="home-stat-label">Avg Score</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-value" id="hs-streak">0</span>
+          <span class="home-stat-label">🔥 Streak</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="home-actions-label">Start Training</div>
+      <div class="home-actions">
+        <button class="btn-home-action primary" id="btn-quick-workout">
+          <div class="btn-icon">⚡</div>
+          <div class="btn-text">
+            <span class="btn-label">Quick Workout</span>
+            <span class="btn-desc">AI-generated based on your history</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+        <button class="btn-home-action" id="btn-custom-workout">
+          <div class="btn-icon">✏️</div>
+          <div class="btn-text">
+            <span class="btn-label">Custom Workout</span>
+            <span class="btn-desc">Pick your own exercises</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+        <button class="btn-home-action" id="btn-single-exercise">
+          <div class="btn-icon">🎯</div>
+          <div class="btn-text">
+            <span class="btn-label">Single Exercise</span>
+            <span class="btn-desc">Jump in with AI form check</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+      </div>
+
+      <div class="home-actions-label">More</div>
+      <div class="home-actions">
+        <button class="btn-home-action" id="btn-history">
+          <div class="btn-icon">📊</div>
+          <div class="btn-text">
+            <span class="btn-label">Progress &amp; History</span>
+            <span class="btn-desc">Past workouts and stats</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+        <button class="btn-home-action" id="btn-goals">
+          <div class="btn-icon">🏆</div>
+          <div class="btn-text">
+            <span class="btn-label">My Goals</span>
+            <span class="btn-desc">Weekly targets</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+        <button class="btn-home-action" id="btn-analytics">
+          <div class="btn-icon">📈</div>
+          <div class="btn-text">
+            <span class="btn-label">Analytics</span>
+            <span class="btn-desc">Score trends, body focus</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+        <button class="btn-home-action" id="btn-achievements">
+          <div class="btn-icon">🏅</div>
+          <div class="btn-text">
+            <span class="btn-label">Achievements</span>
+            <span class="btn-desc">XP, level, badges</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+        <button class="btn-home-action" id="btn-calibrate">
+          <div class="btn-icon">📷</div>
+          <div class="btn-text">
+            <span class="btn-label">Calibrate Camera</span>
+            <span class="btn-desc">SmartLock body setup</span>
+          </div>
+          <span class="btn-arrow">›</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ═══ SCREEN 2: BODY PART SELECTION ═══ -->
+    <div id="bodypart-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-bodypart">← Back</button>
+        <h2 class="screen-title">Select Muscle Groups</h2>
+        <span class="screen-hint">Tap one or more</span>
+      </div>
+
+      <div class="bodypart-grid" id="bodypart-grid">
+        <!-- Generated by JS -->
+      </div>
+
+      <div class="screen-footer">
+        <div class="selected-count" id="selected-count">0 selected</div>
+        <button class="btn-start" id="btn-generate-workout" disabled>Generate Workout</button>
+      </div>
+    </div>
+
+    <!-- ═══ SCREEN 3: WORKOUT BUILDER ═══ -->
+    <div id="workout-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-workout">← Back</button>
+        <h2 class="screen-title">Your Workout</h2>
+        <button class="btn-add-exercise" id="btn-add-exercise">+ Add</button>
+      </div>
+
+      <div class="workout-list" id="workout-list">
+        <!-- Generated by JS -->
+      </div>
+
+      <div class="screen-footer">
+        <div class="workout-summary" id="workout-summary">0 exercises • 0 sets</div>
+        <button class="btn-start" id="btn-start-workout">🚀 Start Workout</button>
+      </div>
+    </div>
+
+    <!-- ═══ SCREEN 3B: ADD EXERCISE MODAL ═══ -->
+    <div id="add-exercise-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add Exercise</h3>
+          <button class="btn-close-modal" id="btn-close-modal">✕</button>
+        </div>
+        <input type="text" class="search-input" id="exercise-search" placeholder="Search exercises...">
+        <div class="exercise-add-list" id="exercise-add-list">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SCREEN 4: EXERCISE SESSION ═══ -->
+    <div id="session-screen" class="screen">
+      <div class="camera-container">
+        <!-- camera-viewport is the element we rotate -->
+        <div id="camera-viewport" class="camera-viewport">
+          <video id="camera-feed" autoplay playsinline muted></video>
+          <canvas id="skeleton-canvas"></canvas>
+          <canvas id="hud-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Exercise info bar -->
+      <div class="exercise-info-bar" id="exercise-info-bar">
+        <div class="exercise-progress">
+          <span id="exercise-current-name">Bicep Curl</span>
+          <span class="exercise-set-info" id="exercise-set-info">Set 1/3 • 0/12 reps</span>
+        </div>
+        <div class="exercise-progress-dots" id="exercise-progress-dots"></div>
+      </div>
+
+      <div class="fps-display" id="fps-display">-- FPS</div>
+
+      <!-- Session Guard overlays -->
+      <div id="session-pause-overlay" class="session-pause-overlay" style="display:none">
+        <div class="pause-overlay-icon">👀</div>
+        <div id="pause-overlay-text" class="pause-overlay-text">Step back into frame to resume</div>
+      </div>
+      <div id="session-light-warning" class="session-light-warning" style="display:none">
+        <span>💡</span><span>Low light — improve lighting for better accuracy</span>
+      </div>
+
+      <!-- Rest Timer Overlay -->
+      <div id="rest-timer-overlay" class="rest-timer-overlay hidden">
+        <div class="rest-timer-inner">
+          <div class="rest-timer-label">💪 Rest</div>
+          <div class="rest-timer-countdown" id="rest-countdown">60</div>
+          <div class="rest-timer-subtext">Next set starts automatically</div>
+          <div class="rest-timer-actions">
+            <button class="btn-rest-plus" id="btn-rest-plus">+30s</button>
+            <button class="btn-rest-skip" id="btn-rest-skip">Skip Rest ▶</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-bar">
+        <button class="btn-control" id="btn-switch-camera">🔄 Flip</button>
+        <button class="btn-control" id="btn-rotate-cam" title="Rotate camera 90°">↻ Rotate</button>
+        <button class="btn-control" id="btn-toggle-voice">🔊 Voice</button>
+        <button class="btn-control accent" id="btn-next-set">Next Set ▶</button>
+        <button class="btn-control" id="btn-skip-exercise">Skip ⏭</button>
+        <button class="btn-control danger" id="btn-end-workout">⏹ End</button>
+      </div>
+    </div>
+
+    <!-- ═══ SCREEN 5: SINGLE EXERCISE SELECT ═══ -->
+    <div id="single-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-single">← Back</button>
+        <h2 class="screen-title">Select Exercise</h2>
+        <span class="screen-hint">AI Form Check available</span>
+      </div>
+
+      <div class="exercise-grid" id="single-exercise-grid">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+
+    <!-- ═══ SCREEN 7: HISTORY ═══ -->
+    <div id="history-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-history">← Back</button>
+        <h2 class="screen-title">Progress</h2>
+        <span class="screen-hint"></span>
+      </div>
+
+      <!-- Weekly Stats -->
+      <div class="weekly-stats" id="weekly-stats">
+        <h3 class="section-title">This Week</h3>
+        <div class="stats-grid compact">
+          <div class="stat-card"><div class="stat-value" id="ws-workouts">0</div><div class="stat-label">Workouts</div></div>
+          <div class="stat-card"><div class="stat-value" id="ws-reps">0</div><div class="stat-label">Reps</div></div>
+          <div class="stat-card"><div class="stat-value" id="ws-minutes">0</div><div class="stat-label">Minutes</div></div>
+          <div class="stat-card"><div class="stat-value" id="ws-score">--</div><div class="stat-label">Avg Score</div></div>
+        </div>
+      </div>
+
+      <!-- Personal Bests -->
+      <div class="personal-bests">
+        <h3 class="section-title">🏆 Personal Bests</h3>
+        <div class="pb-row"><span>Best Form Score</span><span id="pb-score">--</span></div>
+        <div class="pb-row"><span>Most Reps (session)</span><span id="pb-reps">--</span></div>
+        <div class="pb-row"><span>Longest Session</span><span id="pb-duration">--</span></div>
+      </div>
+
+      <!-- Session History -->
+      <h3 class="section-title">Recent Workouts</h3>
+      <div class="history-list" id="history-list">
+        <div class="history-empty">No workouts yet. Start your first one! 💪</div>
+      </div>
+    </div>
+
+    <!-- ═══ SCREEN 6: WORKOUT SUMMARY ═══ -->
+    <div id="summary-screen" class="screen">
+      <div class="summary-title">Workout Complete! 🎉</div>
+      <div class="summary-subtitle" id="summary-exercise"></div>
+
+      <!-- XP Gain Banner -->
+      <div class="xp-banner" id="xp-banner" style="display:none">
+        <span id="xp-gained">+150 XP</span>
+        <span id="xp-level-tag">Level 2 🔥</span>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-reps">0</div>
+          <div class="stat-label">Total Reps</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-score">--</div>
+          <div class="stat-label">Avg Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-exercises">--</div>
+          <div class="stat-label">Exercises</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-duration">--</div>
+          <div class="stat-label">Duration</div>
+        </div>
+      </div>
+
+      <div class="rep-scores">
+        <div class="rep-scores-title">Per-Rep Scores</div>
+        <div class="rep-bar-chart" id="rep-bar-chart"></div>
+      </div>
+
+      <button class="btn-start" id="btn-restart">New Workout</button>
+    </div>
+
+    <!-- ═══ SCREEN: GOALS ═══ -->
+    <div id="goals-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-goals">← Back</button>
+        <h2 class="screen-title">My Goals</h2>
+        <span class="screen-hint">Tap to set</span>
+      </div>
+      <div id="goals-list"></div>
+    </div>
+
+    <!-- ═══ SCREEN: ANALYTICS ═══ -->
+    <div id="analytics-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-analytics">← Back</button>
+        <h2 class="screen-title">Analytics</h2>
+        <span class="screen-hint"></span>
+      </div>
+
+      <!-- Daily Tip -->
+      <div class="daily-tip" id="daily-tip"></div>
+
+      <!-- Score Trend -->
+      <h3 class="section-title">📈 Form Score Trend</h3>
+      <div class="chart-container">
+        <canvas id="score-chart"></canvas>
+      </div>
+
+      <!-- Weekly Volume -->
+      <h3 class="section-title">💪 Weekly Volume</h3>
+      <div class="weekly-bars" id="weekly-bars"></div>
+
+      <!-- Body Part Distribution -->
+      <h3 class="section-title">🧬 Body Part Focus</h3>
+      <div class="bodypart-bars" id="bodypart-bars"></div>
+
+      <!-- 30-Day Consistency -->
+      <h3 class="section-title">📅 30-Day Consistency</h3>
+      <div class="consistency-grid" id="consistency-grid"></div>
+    </div>
+
+    <!-- ═══ SCREEN: ACHIEVEMENTS ═══ -->
+    <div id="achievements-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-achievements">← Back</button>
+        <h2 class="screen-title">Achievements</h2>
+        <span class="screen-hint" id="ach-count"></span>
+      </div>
+
+      <!-- Level Card -->
+      <div class="level-card" id="level-card"></div>
+
+      <!-- Daily Challenge -->
+      <h3 class="section-title">⚡ Daily Challenge</h3>
+      <div class="challenge-card" id="challenge-card"></div>
+
+      <!-- Achievements Grid -->
+      <h3 class="section-title">🏅 Badges</h3>
+      <div class="achievements-grid" id="achievements-grid"></div>
+    </div>
+
+    <!-- ═══ SCREEN: CALIBRATION ═══ -->
+    <div id="calibration-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-back-calibration">← Back</button>
+        <h2 class="screen-title">Camera Setup</h2>
+        <span class="screen-hint"></span>
+      </div>
+
+      <!-- Placement Guide -->
+      <div class="calib-guide">
+        <h3 class="section-title">📹 Camera Placement Guide</h3>
+        <div class="calib-tips">
+          <div class="calib-tip">✔️ Place camera at hip height (1 metre off floor)</div>
+          <div class="calib-tip">✔️ Stand 2–3 metres from the camera</div>
+          <div class="calib-tip">✔️ Make sure your full body is visible</div>
+          <div class="calib-tip">✔️ Ensure good lighting — face a window if possible</div>
+          <div class="calib-tip">✔️ Wear fitted clothes (loose clothes hide joints)</div>
+        </div>
+
+        <!-- Camera placement status -->
+        <div class="calib-status" id="calib-status">
+          <div class="calib-status-icon" id="calib-status-icon">⏳</div>
+          <div class="calib-status-text" id="calib-status-text">Starting camera check...</div>
+        </div>
+      </div>
+
+      <!-- Live preview for calibration -->
+      <div class="calib-preview">
+        <video id="calib-video" autoplay playsinline muted></video>
+        <canvas id="calib-canvas"></canvas>
+      </div>
+
+      <!-- Height input -->
+      <div class="calib-height">
+        <h3 class="section-title">📐 Your Height (optional)</h3>
+        <div class="height-input-row">
+          <input type="number" id="calib-height-input" class="height-input" placeholder="e.g. 175" min="140" max="220">
+          <span class="height-unit">cm</span>
+        </div>
+      </div>
+
+      <!-- T-Pose calibration -->
+      <div class="calib-tpose">
+        <h3 class="section-title">🧘 Body Calibration (optional)</h3>
+        <p class="calib-desc">Stand in a T-pose (arms out to sides) and tap Capture to measure your limb ratios. This improves angle accuracy for your body type.</p>
+        <button class="btn-start" id="btn-capture-tpose" style="margin-top:12px;">Capture T-Pose</button>
+        <div class="calib-captured" id="calib-captured" style="display:none">✅ Limb ratios captured!</div>
+      </div>
+
+      <div class="screen-footer">
+        <span></span>
+        <button class="btn-start" id="btn-done-calibration">Done ✔</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="js/app.js?v=9"></script>
+</body>
+</html>
