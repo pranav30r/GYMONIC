@@ -494,9 +494,16 @@ html, body {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%; object-fit: cover;
 }
-#skeleton-canvas, #hud-canvas {
+#skeleton-canvas {
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%; pointer-events: none;
+}
+/* hud-canvas sits outside camera-viewport so it is NOT affected by the mirror transform.
+   It still covers the full camera-container area via absolute positioning. */
+#hud-canvas {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; pointer-events: none;
+  z-index: 5;
 }
 
 /* Exercise info bar */

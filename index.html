@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="GYMONIC — AI-powered real-time fitness coaching with pose estimation and form correction.">
   <title>GYMONIC — AI Fitness Coach</title>
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=12">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="manifest" href="/manifest.json">
@@ -138,7 +138,7 @@
     <!-- ═══ SCREEN 2: BODY PART SELECTION ═══ -->
     <div id="bodypart-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-bodypart">← Back</button>
+        <button class="btn-back" id="btn-back-bodypart"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Select Muscle Groups</h2>
         <span class="screen-hint">Tap one or more</span>
       </div>
@@ -156,7 +156,7 @@
     <!-- ═══ SCREEN 3: WORKOUT BUILDER ═══ -->
     <div id="workout-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-workout">← Back</button>
+        <button class="btn-back" id="btn-back-workout"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Your Workout</h2>
         <button class="btn-add-exercise" id="btn-add-exercise">+ Add</button>
       </div>
@@ -192,8 +192,9 @@
         <div id="camera-viewport" class="camera-viewport">
           <video id="camera-feed" autoplay playsinline muted></video>
           <canvas id="skeleton-canvas"></canvas>
-          <canvas id="hud-canvas"></canvas>
         </div>
+        <!-- hud-canvas is a sibling of camera-viewport so it is never mirrored -->
+        <canvas id="hud-canvas"></canvas>
       </div>
 
       <!-- Exercise info bar -->
@@ -242,7 +243,7 @@
     <!-- ═══ SCREEN 5: SINGLE EXERCISE SELECT ═══ -->
     <div id="single-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-single">← Back</button>
+        <button class="btn-back" id="btn-back-single"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Select Exercise</h2>
         <span class="screen-hint">AI Form Check available</span>
       </div>
@@ -255,7 +256,7 @@
     <!-- ═══ SCREEN 7: HISTORY ═══ -->
     <div id="history-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-history">← Back</button>
+        <button class="btn-back" id="btn-back-history"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Progress</h2>
         <span class="screen-hint"></span>
       </div>
@@ -327,7 +328,7 @@
     <!-- ═══ SCREEN: GOALS ═══ -->
     <div id="goals-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-goals">← Back</button>
+        <button class="btn-back" id="btn-back-goals"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">My Goals</h2>
         <span class="screen-hint">Tap to set</span>
       </div>
@@ -337,7 +338,7 @@
     <!-- ═══ SCREEN: ANALYTICS ═══ -->
     <div id="analytics-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-analytics">← Back</button>
+        <button class="btn-back" id="btn-back-analytics"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Analytics</h2>
         <span class="screen-hint"></span>
       </div>
@@ -367,7 +368,7 @@
     <!-- ═══ SCREEN: ACHIEVEMENTS ═══ -->
     <div id="achievements-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-achievements">← Back</button>
+        <button class="btn-back" id="btn-back-achievements"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Achievements</h2>
         <span class="screen-hint" id="ach-count"></span>
       </div>
@@ -387,7 +388,7 @@
     <!-- ═══ SCREEN: CALIBRATION ═══ -->
     <div id="calibration-screen" class="screen">
       <div class="screen-header">
-        <button class="btn-back" id="btn-back-calibration">← Back</button>
+        <button class="btn-back" id="btn-back-calibration"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
         <h2 class="screen-title">Camera Setup</h2>
         <span class="screen-hint"></span>
       </div>
