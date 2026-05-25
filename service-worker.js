@@ -4,7 +4,7 @@
  * MediaPipe model files are NOT cached (too large, served from CDN).
  */
 
-const CACHE_NAME = 'gymonic-v1';
+const CACHE_NAME = 'gymonic-v4';
 
 const STATIC_ASSETS = [
   '/',
