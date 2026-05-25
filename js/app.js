@@ -745,31 +745,36 @@ $('btn-rest-plus').addEventListener('click', () => {
 });
 
 // ─── Camera Mirror Helper ────────────────────────────────────────────
-// Mirror is applied to the video+skeleton only (not hud-canvas)
-// We track it separately from rotation so they compose correctly
+// The mirror (scaleX -1) is applied ONLY to #camera-feed and #skeleton-canvas.
+// #camera-viewport receives rotation only — never a scaleX flip.
+// This guarantees #hud-canvas text is NEVER mirrored, regardless of DOM position.
 function _applyCameraTransform() {
   const vp       = $('camera-viewport');
+  const video    = $('camera-feed');
+  const skeleton = $('skeleton-canvas');
   const rotation = state.cameraRotation ?? 0;
-  const mirror   = state.facingMode === 'user'; // user cam = mirrored
+  const mirror   = state.facingMode === 'user'; // front cam needs mirror
 
-  // Compose: rotate + optional mirror
-  // We set a CSS variable for the "scale" part — mirror flips X
-  const mirrorScale = mirror ? -1 : 1;
   vp.setAttribute('data-rotation', String(rotation));
 
-  // For 0° and 180°: mirror via scaleX on the video + skeleton directly
-  // For 90°/270°: mirror is tricky — apply inline transform override
   if (rotation === 0 || rotation === 180) {
-    vp.style.transform = `rotate(${rotation}deg) scaleX(${mirrorScale})`;
+    // Simple rotation — viewport carries only the rotate
+    vp.style.transform = `rotate(${rotation}deg)`;
   } else {
-    // 90 or 270: viewport shrinks to fit — keep aspect ratio
+    // 90° / 270° — shrink viewport to fit rotated content in container
     const container = vp.parentElement;
     const cw = container.clientWidth  || window.innerWidth;
     const ch = container.clientHeight || window.innerHeight;
-    // When rotated 90°, the viewport's height becomes the container's width
     const scale = Math.min(cw / ch, ch / cw);
-    vp.style.transform = `rotate(${rotation}deg) scaleX(${mirrorScale * scale})`;
+    vp.style.transform = `rotate(${rotation}deg) scale(${scale})`;
   }
+
+  // Apply mirror directly to video + skeleton (in their LOCAL coordinate space).
+  // Because they are children of the rotating viewport, scaleX(-1) flips them
+  // along their local X axis, which correctly mirrors the image for any rotation.
+  const mirrorVal = mirror ? 'scaleX(-1)' : '';
+  if (video)    video.style.transform    = mirrorVal;
+  if (skeleton) skeleton.style.transform = mirrorVal;
 
   // Update rotate button label
   const btn = $('btn-rotate-cam');
